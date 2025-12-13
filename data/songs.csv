@@ -1,0 +1,11 @@
+id,song_name,genre,bpm,energy,danceability,popularity
+1,Blinding Lights,Pop,171,0.8,0.5,95
+2,Shape of You,Pop,96,0.6,0.8,90
+3,Bohemian Rhapsody,Rock,144,0.4,0.3,85
+4,Smells Like Teen Spirit,Rock,117,0.9,0.5,88
+5,Sicko Mode,HipHop,155,0.7,0.8,92
+6,Lose Yourself,HipHop,171,0.8,0.7,89
+7,Uptown Funk,Funk,115,0.9,0.9,80
+8,Someone Like You,Ballad,135,0.3,0.3,82
+9,Bad Guy,Pop,135,0.5,0.7,94
+10,Hotel California,Rock,147,0.6,0.4,87
