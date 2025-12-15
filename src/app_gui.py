@@ -4,20 +4,21 @@ import os
 from reccomender import MusicRecommender
 
 ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("green")
 
 class MusicApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         self.title("Muzik Öneri Motoru")
-        self.geometry("600x500")
+        self.geometry("700x550")
         self.resizable(False,False)
         
         current_dir=os.path.dirname(os.path.abspath(__file__))
-        file_path=os.path.join(current_dir, "..","data","songs.csv")
+        file_path=os.path.join(current_dir, "..","data","spotify_tracks.csv")
         
         try:
+            print("🎵 Müzik öneri motoru başlatılıyor...")
             self.df=pd.read_csv(file_path)
             self.reccomender=MusicRecommender(self.df)
             print("Veri başarıyla yüklendi ve motor hazır.")
@@ -29,22 +30,25 @@ class MusicApp(ctk.CTk):
         self.create_widgets()
 
     def create_widgets(self):
-        self.title_label=ctk.CTkLabel(self,text="🎵 Müzik Öneri Motoru",font=ctk.CTkFont(size=24,weight="bold"))
+        self.title_label=ctk.CTkLabel(self,text="🎵 Müzik Öneri Motoru",font=ctk.CTkFont(size=26,weight="bold"))
         self.title_label.pack(pady=20)
+    
+        self.subtitle_label=ctk.CTkLabel(self,text="114.000'den fazla şarkı arasından sevdiğin şarkıya benzer öneriler al!",font=ctk.CTkFont(size=14))
+        self.subtitle_label.pack(pady=(0,20))
 
         self.input_frame=ctk.CTkFrame(self)
         self.input_frame.pack(pady=10,padx=30,fill="x")
 
-        self.song_entry=ctk.CTkEntry(self.input_frame,placeholder_text="Örn: Blinding Lights",width=300)
+        self.song_entry=ctk.CTkEntry(self.input_frame,placeholder_text="Örn: Blinding Lights",width=350)
         self.song_entry.pack(side="left",padx=(20,10),pady=20)
 
         self.search_button=ctk.CTkButton(self.input_frame,text="Önerileri Getir",command=self.run_recommendation)
         self.search_button.pack(side="left",padx=10)
 
-        self.result_textbox=ctk.CTkTextbox(self,width=500,height=300,font=("Consolas", 14))
+        self.result_textbox=ctk.CTkTextbox(self,width=600,height=300,font=("Consolas", 12))
         self.result_textbox.pack(pady=20)
 
-        self.result_textbox.insert("0.0","Yukariya sevdigin bir sarki adini gir ve butona tikla.\n\n(Örnekler: Sicko Mode, Bohemian Rhapsody, Bad Guy ")
+        self.result_textbox.insert("0.0","Yukarıya sevdiğin bir Türkçe şarkı adını gir ve butona tıkla.\n\n(Örnekler: Sicko Mode, Bohemian Rhapsody, Bad Guy ")
         self.result_textbox.configure(state="disabled")
 
     def run_recommendation(self):
@@ -58,14 +62,23 @@ class MusicApp(ctk.CTk):
             self.show_result("⚠️ Lütfen geçerli bir şarkı adı girin.")
             return
         
-        result = self.reccomender.recommend(user_song)
+        self.search_button.configure(state="disabled",text="Öneriler Getiriliyor...")
+        self.update()
 
-        if isinstance(result, str):
-            self.show_result(result)
-        else:
-            formatted_result = f"🎉 '{user_song}' için öneriler:\n\n"
-            formatted_result += result.to_string(index=False, justify="left")
-            self.show_result(formatted_result)
+        try:
+            result = self.reccomender.recommend(user_song)
+
+            if isinstance(result, str):
+                self.show_result(result)
+            else:
+                formatted_result = f"🎉 '{user_song}' şarkısını sevenler bunları da dinliyor :\n\n"
+                formatted_result += result.to_string(index=False, justify="left")
+                self.show_result(formatted_result)
+        except Exception as e:
+            self.show_result(f"❌ Bir hata oluştu: {e}")
+        finally:
+            self.search_button.configure(state="normal",text="Önerileri Getir")
+        
     def show_result(self, message):
         self.result_textbox.configure(state="normal")  # Kilidi aç
         self.result_textbox.delete("0.0", "end")       # Önceki metni sil
