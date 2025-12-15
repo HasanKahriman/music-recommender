@@ -45,7 +45,7 @@ class MusicApp(ctk.CTk):
         self.search_button=ctk.CTkButton(self.input_frame,text="Önerileri Getir",command=self.run_recommendation)
         self.search_button.pack(side="left",padx=10)
 
-        self.result_textbox=ctk.CTkTextbox(self,width=600,height=300,font=("Consolas", 12))
+        self.result_textbox=ctk.CTkTextbox(self,width=700,height=300,font=("Consolas", 12),wrap="none")
         self.result_textbox.pack(pady=20)
 
         self.result_textbox.insert("0.0","Yukarıya sevdiğin bir Türkçe şarkı adını gir ve butona tıkla.\n\n(Örnekler: Sicko Mode, Bohemian Rhapsody, Bad Guy ")
@@ -67,13 +67,35 @@ class MusicApp(ctk.CTk):
 
         try:
             result = self.reccomender.recommend(user_song)
-
             if isinstance(result, str):
                 self.show_result(result)
             else:
-                formatted_result = f"🎉 '{user_song}' şarkısını sevenler bunları da dinliyor :\n\n"
-                formatted_result += result.to_string(index=False, justify="left")
+                formatted_result = f"🎉 '{user_song}' için benzer şarkılar:\n\n"
+                
+                header = f"{'ŞARKI':<30} {'SANATÇI':<25} {'TÜR':<15} {'BPM':<5}"
+                formatted_result += header + "\n"
+                formatted_result += "-" * 80 + "\n" 
+
+                for index, row in result.iterrows():
+                    song_name = str(row['Şarkı'])
+                    if len(song_name) > 28:
+                        song_name = song_name[:28] + ".."
+                    
+                    artist_name = str(row['Sanatçı'])
+                    if len(artist_name) > 22:
+                        artist_name = artist_name[:22] + ".."
+                    
+                    try:
+                        bpm_val = int(float(row['BPM']))
+                    except:
+                        bpm_val = str(row['BPM'])
+
+                    line = f"{song_name:<30} {artist_name:<25} {str(row['Tür']):<15} {str(bpm_val):<5}"
+                    formatted_result += line + "\n"
+
                 self.show_result(formatted_result)
+                
+            
         except Exception as e:
             self.show_result(f"❌ Bir hata oluştu: {e}")
         finally:
