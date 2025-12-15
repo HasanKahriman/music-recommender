@@ -1,74 +1,58 @@
-# 🎵 Müzik Öneri Motoru (Music Recommender)
+# 🎵 Müzik Öneri Motoru v2.0
 
-Kullanıcının sevdiği bir şarkıya dayanarak benzer şarkıları öneren **Python** tabanlı masaüstü uygulaması.
+114.000+ şarkılık Spotify veri seti üzerinde çalışan yapay zeka destekli müzik öneri sistemi.
 
-Spotify benzeri bir algoritma mantığıyla çalışır; şarkıların **BPM (Tempo)**, **Enerji**, **Dans Edilebilirlik** ve **Tür** özelliklerini analiz ederek matematiksel benzerlik (Cosine Similarity) hesaplar.
+## Özellikler
 
----
+- **Big Data**: 114.000+ şarkı içeren gerçek Spotify veri seti ile çalışır
+- **Akıllı Algoritma**: Cosine Similarity ile akustik özellik analizi
+- **Hızlı Sonuç**: Vektörel arama ile saniyeler içinde öneri
+- **Modern Arayüz**: CustomTkinter ile Dark Mode GUI
 
-## 🚀 Özellikler
-
-- **Modern Arayüz (GUI):** `CustomTkinter` ile geliştirilmiş, göz yormayan Dark Mode tasarımı
-- **Akıllı Algoritma:** `Scikit-learn` ve `Cosine Similarity` ile şarkılar arası vektörel benzerlik hesabı
-- **Hızlı Veri İşleme:** `Pandas` kütüphanesi ile optimize edilmiş veri analizi
-- **Hata Yönetimi:** Yanlış girişlere ve eksik dosyalara karşı korumalı yapı
-
----
-
-## 🛠️ Kullanılan Teknolojiler
-
-- [Python 3.x](https://www.python.org/)
-- [Pandas](https://pandas.pydata.org/) - Veri Manipülasyonu
-- [Scikit-learn](https://scikit-learn.org/) - Makine Öğrenmesi
-- [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) - Modern GUI
-
----
-
-## 💻 Kurulum ve Çalıştırma
-
-### 1. Projeyi İndirin
+## Kurulum
 ```bash
 git clone https://github.com/HasanKahriman/music-recommender.git
 cd music-recommender
-```
-
-### 2. Gerekli Paketleri Yükleyin
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Uygulamayı Başlatın
+## Kullanım
 ```bash
 python src/app_gui.py
 ```
 
----
+1. Arama kutusuna şarkı adı yazın (örn: "Starboy")
+2. "Bul ve Öner" butonuna tıklayın
+3. En benzer 5 şarkıyı görün
 
-##  Nasıl Kullanılır?
+## Teknolojiler
 
-1. Uygulama açıldığında kutucuğa sevdiğiniz bir şarkı adını yazın (Örn: **Sicko Mode**)
-2. **"Önerileri Getir"** butonuna tıklayın
-3. Sistem size o şarkıya en çok benzeyen **5 şarkıyı** alt alta listeleyecektir
+- **Python 3.x**
+- **Pandas** - Veri analizi
+- **Scikit-learn** - Makine öğrenmesi
+- **CustomTkinter** - GUI
 
----
-
-## 📁 Proje Yapısı
+## Proje Yapısı
 ```
 music-recommender/
-├── src/
-│   ├── app_gui.py          # Ana GUI uygulaması
-│   └── recommender.py      # Öneri algoritması
 ├── data/
-│   └── songs.csv           # Şarkı veri seti
-├── requirements.txt        # Gerekli Python paketleri
-└── README.md              # Proje dokümantasyonu
+│   ├── spotify_tracks.csv    # 114K+ şarkı veri seti
+│   └── songs.csv             # Şarkı verileri
+├── src/
+│   ├── app_gui.py
+│   ├── recommender.py
+│   └── main.py
+├── requirements.txt
+└── README.md
 ```
 
----
+## Nasıl Çalışır?
 
-## 👤 Geliştirici
+Sistem, şarkıların tempo, enerji, dans edilebilirlik gibi akustik özelliklerini analiz eder ve Cosine Similarity algoritması ile matematiksel benzerlik hesaplar.
 
-**Hasan Kahriman**  
-[GitHub](https://github.com/HasanKahriman) | [LinkedIn](https://linkedin.com/in/hasankahriman)
+**Not:** Bu proje, 114.000+ şarkılık büyük veri yapısı kullanılarak geliştirilmiştir.
 
----
+## İletişim
+
+**Hasan Kahriman**
+- GitHub: [@HasanKahriman](https://github.com/HasanKahriman)
